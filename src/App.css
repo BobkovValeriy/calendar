@@ -1,38 +1,79 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background-color: rgb(244,222,167);
+  min-height: 100vh;
+}
+.main{
+  margin: 10% 0;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.month{
+  width: 1140px;
+  font-size: 26px;
+}
+.nameOfMonth{
+  font-size: 43px;
+}
+.nameOfMonth span{
+  color: red;
 }
 
-.App-link {
-  color: #61dafb;
+.monthDays{
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-auto-rows: minmax(0, 1fr); /* Автоматически расширять строки */
+  background-color: rgb(218, 113, 32);
+  /* gap: 1px; */
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.day{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 34px;
+  margin: 5px ;
+  color: rgb(49, 38, 8);
+  width: 100px;
+  height: 100px;
+  background-color: rgba(174, 144, 10, 1);
+  border: 2px rgb(42, 36, 0) solid;
+  cursor: pointer;
+}
+.left-margin {
+  margin-right: 15px;
+    padding: 0;
+}
+.right-margin{
+  margin-left: 15px;
+    padding: 0;
+}
+.arrow-left{
+  width: 100px;
+  height: 100px;
+  transform: rotate(180deg);
+  background-color: rgb(214, 188, 122);
+  color: gold;
+  cursor: pointer;
+}
+.arrow-right{
+  width: 100px;
+  height: 100px;
+  color: gold;
+  background-color: rgb(214, 188, 122);
+  cursor: pointer;
+}
+.arrow-right:hover, .arrow-left:hover{
+  background-color: rgb(194, 161, 79);
 }

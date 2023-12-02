@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import Month from "./Month.jsx";
-import { AiOutlineArrowRight } from "react-icons/ai";
 
 function App() {
   const day = new Date();
@@ -58,32 +57,17 @@ function App() {
     monthArray.forEach((monthData) => fetchWorkDays(monthData));
   }, []);
 
-  function monthSwitchDown() {
-    if (monthShow === 0) {
-      setMonthShow(2)
-    } else setMonthShow((prev) => prev - 1);
-  }
-  function monthSwitchUp() {
-    if (monthShow === 2) {
-      setMonthShow(0)
-    } else setMonthShow((prev) => prev + 1);
-  }
+  function monthSwitch() {}
 
   return (
     <div className="App">
       <header className="App-header"></header>
-      <main className="main">
-        <div className="left-margin" onClick={monthSwitchDown}>
-          <AiOutlineArrowRight className="arrow-left" />
-        </div>
+      <main>
         <Month
           key={monthArray[monthShow].firstDay.getTime()}
           monthData={monthArray[monthShow]}
-          currentDayYear={monthArray[monthShow].lastDay.getFullYear()}
+          currentDayYear={currentDayYear}
         />
-        <div className="right-margin" onClick={monthSwitchUp}>
-          <AiOutlineArrowRight className="arrow-right" />
-        </div>
       </main>
       <footer></footer>
     </div>
