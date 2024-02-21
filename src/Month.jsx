@@ -1,8 +1,14 @@
 import "./App.css";
 import Day from "./day.jsx";
 
-function Month({ monthData, currentDayYear }) {
-  const startDay = new Date(2023, 9, 4);
+function Month({
+  monthData,
+  currentDayYear,
+  setMonthArray,
+  // setChanges,
+  setMonthChanges,
+}) {
+  const startDay = new Date(2024, 2, 2);
   const currentDayMonth = monthData.lastDay.getMonth();
   const monthNames = [
     "Январь",
@@ -21,11 +27,22 @@ function Month({ monthData, currentDayYear }) {
   function isWorkDay(day, startDay) {
     const millisecondsInDay = 24 * 60 * 60 * 1000;
     let dayDiff = Math.floor((day - startDay) / millisecondsInDay);
-    // Рабочим будем считать каждый четвертый день, включая стартовый день
-    if (dayDiff % 4 === 0) {
+
+    dayDiff = ((dayDiff % 4) + 4) % 4;
+
+    if (dayDiff === 0) {
+      // console.log(day, "graphick");
       return "work";
+    } else if (
+      Array.isArray(monthData.workDays) &&
+      monthData.workDays.includes(day.getDate())
+    ) {
+      return "work";
+    } else {
+      return "non-work";
     }
   }
+
   return (
     <div className="month">
       <div className="nameOfMonth">
@@ -38,7 +55,14 @@ function Month({ monthData, currentDayYear }) {
             const newDay = new Date(currentDayYear, currentDayMonth, i);
             const isWork = isWorkDay(newDay, startDay);
             dateComponents.push(
-              <Day key={i} newDay={newDay} isWork={isWork} />
+              <Day
+                key={i}
+                newDay={newDay}
+                isWork={isWork}
+                setMonthArray={setMonthArray}
+                // setChanges={setChanges}
+                setMonthChanges={setMonthChanges}
+              />
             );
           }
           return dateComponents;

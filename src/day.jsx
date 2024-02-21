@@ -1,45 +1,71 @@
 import { useState } from "react";
 import "./App.css";
 
-function Day({ newDay, isWork }) {
-  let [work, setWork] = useState(isWork);
+function Day({ newDay, isWork, setMonthArray, setMonthChanges }) {
   const numberOfDay = newDay.getDate();
   const dayOfWeek = newDay.getDay();
   const daysOfWeekNames = ["ВС", "ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ"];
   const dayName = daysOfWeekNames[dayOfWeek];
   const [showButtons, setShowButtons] = useState(false);
-  function weWork() {
-    setWork("work");
+  function addWorkDay() {
+    setMonthArray((prevMonthArray) => {
+      const updatedArray = prevMonthArray.map((prevMonth) =>
+        prevMonth.firstDay.getMonth() === newDay.getMonth()
+          ? {
+              ...prevMonth,
+              workDays: [...prevMonth.workDays, numberOfDay],
+            }
+          : prevMonth
+      );
+
+      // Обновляем только соответствующий месяц в monthChanges
+      setMonthChanges(newDay.getMonth());
+      return updatedArray;
+    });
   }
-  function removeWork() {
-    setWork("");
+
+  function removeWorkDay() {
+    setMonthArray((prevMonthArray) => {
+      const updatedArray = prevMonthArray.map((prevMonth) =>
+        prevMonth.firstDay.getMonth() === newDay.getMonth()
+          ? {
+              ...prevMonth,
+              workDays: prevMonth.workDays.filter(
+                (day) => day !== newDay.getDate()
+              ),
+            }
+          : prevMonth
+      );
+
+      // Обновляем только соответствующий месяц в monthChanges
+      setMonthChanges(newDay.getMonth());
+
+      return updatedArray;
+    });
   }
+
   function showButton() {
     setShowButtons(true);
   }
   function hideButton() {
     setShowButtons(false);
   }
-  function showData() {
-    console.log(newDay);
-  }
   return (
     <div
       className="day"
-      style={work ? { backgroundColor: "red" } : {}}
+      style={isWork === "work" ? { backgroundColor: "red" } : {}}
       onMouseOver={showButton}
       onMouseLeave={hideButton}
-      onClick={showData}
     >
       <div>{dayName}</div>
       <div>{numberOfDay}</div>
-      {showButtons && !work ? (
-        <button type="" className="addWork" onClick={weWork}>
+      {showButtons && isWork === "non-work" ? (
+        <button type="" className="add-work-day" onClick={addWorkDay}>
           Work!
         </button>
       ) : null}
-      {showButtons && work ? (
-        <button type="" className="removeWork" onClick={removeWork}>
+      {showButtons && isWork === "work" ? (
+        <button type="" className="remove-work-day" onClick={removeWorkDay}>
           Don't work!
         </button>
       ) : null}
